@@ -1,9 +1,12 @@
 # High-Reliability 3.3V Power Supply for STM32
 
+## Notice
+* **Note:** The theoretical explanations inside the attached report may not be 100% accurate, but the LTspice simulations and physical hardware experiments work perfectly. 
+
 ## Overview
 This repository contains the design, simulation, and hardware implementation of a highly reliable 3.3V power supply module optimized for the **STM32L432K** microcontroller. 
 
-Designed in response to the Monash Embedded System Solution (MESS) requirements, the circuit utilizes an **LM317** linear voltage regulator. It focuses on delivering a precise voltage output while ensuring long-term hardware safety, high noise immunity, and stability under dynamic active loads (simulating STM32 clock switching at 1 MHz and 80 MHz).
+The circuit utilizes an **LM317** linear voltage regulator. It focuses on delivering a precise voltage output while ensuring long-term hardware safety, high noise immunity, and stability under dynamic active loads (simulating STM32 clock switching at 1 MHz and 80 MHz).
 
 ## Key Specifications
 * **Input Voltage Range:** 6V to 8V nominal (Tested safe up to $\pm$16V).
@@ -20,8 +23,7 @@ The power supply is designed not just for regulation, but for extreme durability
 2. **Noise & Ripple Filtering Network:** - $C1 = 1\mu F$: Placed at the ADJ pin to reduce high-frequency input to ground and prevent amplification by the LM317.
    - $C2 = 47\mu F$: Placed at the input to filter source noise and transient spikes traveling back to the input side.
    - $C3 = 1\mu F$: Placed at the output to stabilize the voltage against the active load switching of the MCU.
-3. **Overvoltage Protection (OVP):** A 3.6V Zener Diode (`C3V6`) is placed in parallel at the output to clamp voltage spikes below the STM32's absolute maximum rating of 4.0V. *(See limitations below).*
-4. **Reverse Polarity Protection:** A `1N4007` power diode is placed at the input rail, completely blocking current and preventing thermal failure if the power supply is connected backwards.
+3. **Reverse Polarity Protection:** A `1N4007` power diode is placed at the input rail, completely blocking current and preventing thermal failure if the power supply is connected backwards.
 
 ## Known Limitations & Engineering Disclaimers
 * **OVP (Overvoltage Protection) Flaw:** The 3.6V Zener diode is placed directly in parallel with the load without a series current-limiting resistor. While this clamps voltage successfully in ideal LTspice simulations, in a real-world catastrophic LM317 failure (e.g., input shorted to output), the Zener would draw excessive current, exceed its power rating, and burn out almost instantly. Implementing a true hardware protection scheme would require a Crowbar circuit (Zener + Fuse), as adding a simple series resistor would ruin the voltage regulation under variable loads.
@@ -42,5 +44,8 @@ The circuit was mathematically modeled and extensively tested using **LTspice** 
 ## Circuit Schematic
 ![Circuit Schematic](circuit.jpg)
 
-## demo 
-* if you want demo video let me know
+## Demo 
+* If you would like to see a demo video of the hardware in action, please let me know!
+
+## Alternative Version (V2)
+* `circuit_V2` is also included in this repository. Please note that while this version does not have an accompanying written report, its functionality has been fully verified through prior LTspice simulations and physical experiments.
