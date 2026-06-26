@@ -42,7 +42,7 @@ The circuit was mathematically modeled and extensively tested using **LTspice** 
 * `Report.pdf` - The full 17-page engineering design report containing all formulas, component justifications, and DSO oscilloscope measurements.
 
 ## Circuit Schematic
-![Circuit Schematic](circuit.jpg)
+*showing at the circuit above 
 
 ## Demo 
 * If you would like to see a demo video of the hardware in action, please let me know!
